@@ -1,0 +1,70 @@
+{{set . "title" "Welcome Admin"}}
+{{template "header.html" .}}
+{{if .user.Admin}}
+<h1>Add hotel to system</h1>
+<form method="POST" action="{{url "Hotels.AddHotel"}}">
+	{{with $field:= field "hotel.Name" .}}
+	<p class="$field.ErrorClass">
+		<strong>Hotel Name:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	{{with $field:= field "hotel.Address" .}}
+	<p class="$field.ErrorClass">
+		<strong>Address:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	{{with $field:= field "hotel.City" .}}
+	<p class="$field.ErrorClass">
+		<strong>City:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	{{with $field:= field "hotel.State" .}}
+	<p class="$field.ErrorClass">
+		<strong>State:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	{{with $field:= field "hotel.Zip" .}}
+	<p class="$field.ErrorClass">
+		<strong>ZIP:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	{{with $field:= field "hotel.Country" .}}
+	<p class="$field.ErrorClass">
+		<strong>Country:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	{{with $field:= field "hotel.Price" .}}
+	<p class="$field.ErrorClass">
+		<strong>Price:</strong>
+		<input type="text" name="{{$field.Name}}" size="35" value="{{$field.Flash}}">
+		<span class="error">{{$field.Error}}</span>
+	</p>
+	{{end}}
+
+	<p class="buttons">
+		<input type="submit" value="Save">
+		<a href="{{url "Hotels.Index"}}">Cancel</a>
+	</p>
+</form>
+{{else}}
+<h3>You need Admin access to perform this operation. Please contact to admin.</h3>
+{{end}}
+{{template "footer.html" .}}

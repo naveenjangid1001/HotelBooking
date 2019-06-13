@@ -1,0 +1,24 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+<center>
+  <form action="{{url "App.Login"}}" id="formlogin" method="POST">
+    <p class="field">
+      <input placeholder="Email" type="email" name="username" size="30" value="{{.flash.username}}" required>
+    </p>
+    <p class="field">
+      <input placeholder="Password" type="password" name="password" size="30" required>
+    </p>
+    <p class="field">
+      <input type="checkbox" name="remember" value="true">
+      <label>Remember</label>
+
+    </p>
+    <p class="buttons">
+      <input type="submit" value="Login">
+    </p>
+  </form>
+  <p>
+    New user? Please <a href="{{url "App.Register"}}">Register</a> yourelf.
+  </p>
+</center>
+{{template "footer.html" .}}

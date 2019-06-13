@@ -1,0 +1,39 @@
+{{set . "title" "Register"}}
+{{template "header.html" .}}
+<center>
+	<h1>Register</h1>
+	<form action="{{url "App.SaveUser"}}" method="POST">
+		{{with $field := field "user.Name" .}}
+		<p>
+			<input type="text" name="{{$field.Name}}" size="30" placeholder="Full Name" required />
+			<span class="error">{{$field.Error}}</span>
+		</p>
+		{{end}}
+
+		{{with $field := field "user.Username" .}}
+		<p>
+			<input type="email" name="{{$field.Name}}" size="30" placeholder="Email" required />
+			<span class="error">{{$field.Error}}</span>
+		</p>
+		{{end}}
+
+
+		{{with $field := field "user.Password" .}}
+		<p>
+			<input type="password" name="{{$field.Name}}" size="30" placeholder="Password" required />
+			<span class="error">{{$field.Error}}</span>
+		</p>
+		{{end}}
+
+		{{with $field := field "confirmPass" .}}
+		<p>
+			<input type="password" name="confirmPass" size="30" placeholder="Confirm Password" required />
+			<span class="error">{{$field.Error}}</span>
+		</p>
+		{{end}}
+		<p class="buttons">
+			<input type="submit" value="Register" />
+		</p>
+	</form>
+</center>
+{{template "footer.html" .}}

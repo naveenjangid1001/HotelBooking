@@ -1,0 +1,117 @@
+{{set . "title" "Search Hotels"}}
+{{template "header.html" .}}
+<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 80%;
+	}
+
+	td,
+	th {
+		border: 1px solid #dddddd;
+		text-align: center;
+		padding: 8px;
+	}
+</style>
+<h1>Search Hotels</h1>
+
+<p>
+	<form action="/hotels/list" method="GET">
+		<input name="search" type="text" size="30">
+		<input onclick="search()" name="submit" type="submit" value="Find Hotels">
+		<br>
+		<br>
+
+		Maximum Results:
+		<select id="size" name="size">
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+		</select>
+	</form>
+</p>
+<div id="results"></div>
+
+<!-- <script type="text/javascript" charset="utf-8">
+	//Rebuild state
+	$('#search').val(sessvars.search)
+
+	if (sessvars.page == undefined) {
+		sessvars.page = 1
+	}
+	if (sessvars.size == undefined) {
+		sessvars.size = 10
+	}
+	$('#size option[value=' + sessvars.size + ']').attr('selected', 'true')
+	// Search function
+	function search() {
+		sessvars.search = $('#search').val()
+		sessvars.size = $('#size').val()
+		$.get("/hotels/list", {
+			"search": sessvars.search,
+			"size": sessvars.size,
+			"page": sessvars.page
+		}, function (data) {
+			$('#result').html(data)
+			$('#content').css('visibility', 'visible')
+		})
+	}
+	//Events handler
+	document.getElementById('submit')
+	$('#submit').click(function () {
+		sessvars.page = 1
+		search()
+	})
+	$('#search').keyup(function () {
+		sessvars.page = 1
+		search()
+	})
+	$('#nextPage').live('click', function (e) {
+		sessvars.page = $(this).attr('href')
+		e.preventDefault()
+		search()
+	})
+	Init
+	if (sessvars.search != undefined) {
+		$('#content').css('visibility', 'hidden')
+		search()
+	} 
+</script>-->
+
+<h1>Hotel Bookings</h1>
+{{if not .bookings}}
+<p>No bookings found.</p>
+{{else}}
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Address</th>
+			<th>City, State</th>
+			<th>Check-in</th>
+			<th>Check-out</th>
+			<th>Confirmation No.</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{range .bookings}}
+		<tr>
+			<td>{{.Hotel.Name}}</td>
+			<td>{{.Hotel.Address}}</td>
+			<td>{{.Hotel.City}}, {{.Hotel.State}}</td>
+			<td>{{.CheckInStr.Day}}-{{.CheckInStr.Month}}-{{.CheckInStr.Year}}</td>
+			<td>{{.CheckOutStr.Day}}-{{.CheckOutStr.Month}}-{{.CheckOutStr.Year}}</td>
+			<td>{{.BookingId}}</td>
+			<td>
+				<form id="id{{.BookingId}}" method="POST" action="/bookings/{{.BookingId}}/cancel">
+					<a href="javascript:document.getElementById('id{{.BookingId}}').submit();">Cancel Booking</a>
+				</form>
+			</td>
+		</tr>
+		{{end}}
+	</tbody>
+</table>
+{{end}}
+{{template "footer.html" .}}

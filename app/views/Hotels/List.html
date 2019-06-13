@@ -1,0 +1,48 @@
+{{set . "title" "Hotels"}}
+{{template "header.html" .}}
+<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 80%;
+	}
+
+	td,
+	th {
+		border: 1px solid #dddddd;
+		text-align: center;
+		padding: 8px;
+	}
+</style>
+{{if .hotels}}
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Address</th>
+			<th>City, State</th>
+			<th>Zip</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{range .hotels}}
+		<tr>
+			<td>{{.Name}}</td>
+			<td>{{.Address}}</td>
+			<td>{{.City}}, {{.State}}, {{.Country}}</td>
+			<td>{{.Zip}}</td>
+			<td>
+				<a href="{{url "Hotels.Show" .HotelId}}">View Hotel</a>
+			</td>
+		</tr>
+		{{end}}
+	</tbody>
+</table>
+<p>
+	<a id="nextPage" href="/hotels/list?page={{.nextPage}}&search={{.search}}&size={{.size}}">More results</a>
+</p>
+{{else}}
+<p>No more hotels found.</p>
+{{end}}
+{{template "footer.html" .}}
