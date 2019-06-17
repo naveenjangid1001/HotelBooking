@@ -106,7 +106,7 @@ func (c Hotels) CancelBooking(id int) revel.Result {
 		c.Flash.Error("Error occurrured while cancelling your booking. Please try after some time.")
 		return c.Redirect(routes.Hotels.Index())
 	}
-	c.Flash.Success("Booking cancelled. Your money will be refunded to your account.")
+	c.Flash.Success("Booking cancelled.")
 	return c.Redirect(routes.Hotels.Index())
 }
 
@@ -126,7 +126,7 @@ func (c Hotels) ConfirmBooking(id int, booking models.Booking) revel.Result {
 		return c.NotFound("Hotel %d does not exist", id)
 	}
 
-	title := fmt.Sprintf("Confirm %s booking", hotel.Name)
+	//title := fmt.Sprintf("Confirm %s booking", hotel.Name)
 	booking.Hotel = hotel
 	booking.User = c.connected()
 	booking.Validate(c.Validation)
@@ -142,11 +142,9 @@ func (c Hotels) ConfirmBooking(id int, booking models.Booking) revel.Result {
 	if err != nil {
 		panic(err)
 	}
-	c.Flash.Success("Thank you, %s, your confirmation number for %s is %d",
-		booking.User.Name, booking.Hotel.Name, booking.BookingId)
-	//return c.Redirect(routes.Hotels.Index())
-
-	return c.Render(title, hotel, booking)
+	c.Flash.Success("Thank you, %s, your booking in %s is confirmed.",
+		booking.User.Name, booking.Hotel.Name)
+	return c.Redirect(routes.Hotels.Index())
 }
 
 func (c Hotels) Dashboard() revel.Result {
